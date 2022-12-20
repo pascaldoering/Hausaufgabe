@@ -5,6 +5,8 @@ Backend wurde mit Java Servlets umgesetzt.
 
 Frontend in JavaScript.
 
+Das Projekt wurde als Dynamic Web Project angelegt.
+
 
 
 Zum Testen habe ich den Abruf der IDs zufällig gestört, sodass die IDs nur zufällig der Liste hinzugefügt werden und diese dann auch ggf. nachgeladen werden konnten.
