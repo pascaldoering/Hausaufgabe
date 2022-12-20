@@ -3,24 +3,10 @@
 <head>
 <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-<style>
-#footer {
-	width: 100%;
-	height: 1.5em;
-	color: white;
-	text-align: center;
-	position: fixed;
-	z-index: 100;
-	bottom: 0px;
-	left: 0px;
-	cursor: pointer;
-	transition: all 0.6s ease-in-out;
-}
-#blog-card{
-display: none;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="css/index.css" />
+
 <meta charset="UTF-8">
 <title>Hausaufgabe</title>
 </head>
@@ -66,85 +52,4 @@ display: none;
 
 <footer id="footer" class="bg-dark"> &#169; Pascal D&ouml;ring 2022 </footer>
 
-<script>
-
-var ids = [];
-var displayedIds = [];
-var counter = 1;
-var interval = 0;
-
-function intervalGetData() {
-	console.log('intervalGetData()');
- 	getData();
-}
-
-function getData() {
-	console.log('getData()');
-	
-	
-	var bar = new Promise((resolve, reject) => {
-		$.post("InternateAbfrage", '', function(data) {
-			data.forEach(function(id) {
-				if(!ids.includes(id)) ids.push(id);
-				if(data.indexOf(id) == data.length-1) {
-					resolve();
-				}
-			});
-		});
-	});
-
-	bar.then(() => {
-		processID();
-	});
-}
-
-function processID() {
-	console.log('processID()');
-	
-	var wait = new Promise((resolve, reject) => {
-		ids.forEach(function(id) {
-			$.post("InternateAbfrageBeitrag", 'ID='+id, function(blog) {
-				if(blog != null && blog != '' && !displayedIds.includes(id)) {
-					
-					let blogcard = document.getElementById('blog-card');
-					let cloned = blogcard.cloneNode(true);
-					cloned.id = cloned.id + counter;
-					
-					let cheader = cloned.querySelector('#card-header');
-					cheader.id = cheader.id + counter;
-					cheader.innerHTML += 'Blogeintrag mit der ID : '+id;
-					
-					let cbody = cloned.querySelector('#card-body');
-					cbody.id = cbody.id + counter;
-					cbody.innerHTML = blog;
-					
-					let content = document.getElementById('content');
-					
-					content.appendChild(cloned);
-					
-					displayedIds.push(id);
-					
-					counter++;
-				}
-				
-			});
-			if(ids.indexOf(id) == ids.length-1) {
-				resolve();
-			}
-		});
-	});
-
-	wait.then(() => {
-		if(interval == 0) {
-			interval = 5000;													//Interval in welchem die IDs der Blogeintraege abgefragt werden soll
-			console.log('setInterval 10000');									//Interval in welchem die IDs der Blogeintraege abgefragt werden soll
-			var intervalID = window.setInterval(intervalGetData, interval);		//Interval in welchem die IDs der Blogeintraege abgefragt werden soll
-		}
-	});
-}
-
-$(document).ready(function() {
-	getData();
-});
-</script>
 </html>
