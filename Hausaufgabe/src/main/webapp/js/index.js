@@ -1,10 +1,10 @@
 
 var webSocket;
-var messages = document.getElementById("messages");
+var ids = [];
+var displayedIds = [];
+var counter = 1;
 
-
-
-function openSocket(){
+function openSocket() {
     if(webSocket !== undefined && webSocket.readyState !== WebSocket.CLOSED){
        writeResponse("WebSocket is already opened.");
         return;
@@ -13,13 +13,13 @@ function openSocket(){
     webSocket = new WebSocket("ws://localhost:8080/Hausaufgabe/getID");
      
 
-    webSocket.onopen = function(event){
+    webSocket.onopen = function(event) {
         if(event.data === undefined)
             return;
     };
 
-    webSocket.onmessage = function(messageEvent){
-    	if(messageEvent != null && messageEvent.data != null && messageEvent.data != 'null') {
+    webSocket.onmessage = function(messageEvent) {
+    	if(messageEvent != null && messageEvent.data != null && messageEvent.data.split('&')) {
     		console.log(messageEvent);
     		
     		let data = messageEvent.data;
@@ -51,19 +51,14 @@ function openSocket(){
     };
 }
 
-function send(){
+function send() {
     var text = document.getElementById("messageinput").value;
     webSocket.send(text);
 }
 
-function closeSocket(){
+function closeSocket() {
     webSocket.close();
 }
-
-
-var ids = [];
-var displayedIds = [];
-var counter = 1;
 
 $(document).ready(function() {
 	openSocket();
