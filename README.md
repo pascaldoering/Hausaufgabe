@@ -7,6 +7,8 @@ Frontend in JavaScript.
 
 Das Projekt wurde als Dynamic Web Project angelegt.
 
+Hierbei wurde Java in der Version 15, JavaScript in der Version 1.0 und Dynamic Web Module in der Version 4.0 verwendet.
+
 
 
 Zum Testen habe ich den Abruf der IDs zufällig gestört, sodass die IDs nur zufällig der Liste hinzugefügt werden und diese dann auch ggf. nachgeladen werden konnten.
