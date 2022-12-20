@@ -18,8 +18,3 @@ Die unter Hausaufgabe/src/main/webapp/WEB-INF/lib abgelegten .jar-Verzeichnisse 
 
 
 Falls Probleme beim Testen der Software auftreten sollten, würde ich mich sehr über Rückmeldung freuen um diese gegebenenfalls zu beseitigen.
-
-
-
-Wollte es ursprünglich in Scala lösen, aber da ich darin ein absoluter Neuling bin habe ich sämtliche Fortschritte verworfen und neu angefangen in einer Sprache, welche ich 
-etwas besser beherrsche.
