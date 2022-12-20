@@ -19,7 +19,7 @@ function openSocket() {
     };
 
     webSocket.onmessage = function(messageEvent) {
-    	if(messageEvent != null && messageEvent.data != null && messageEvent.data.split('&')) {
+    	if(messageEvent != null && messageEvent.data != null && messageEvent.data.split('&')[0] != 'null') {
     		console.log(messageEvent);
     		
     		let data = messageEvent.data;
