@@ -1,0 +1,93 @@
+package com.doering.hausaufgabe.socket;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
+
+import javax.websocket.OnError;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
+import javax.websocket.server.ServerEndpoint;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.simple.JSONValue;
+
+import com.doering.hausaufgabe.helper.FileHelper;
+
+@ServerEndpoint("/getID")
+public class IDSocket {
+	Session userSession = null;
+	
+	private ArrayList<Integer> ids = new ArrayList<Integer>();
+	
+	@OnOpen
+    public void onOpen(Session session) throws JSONException, IOException {
+		this.userSession = session;
+        System.out.println("Connected to endpoint: " + session.getBasicRemote());
+        loadIDs();
+    }
+
+    @OnMessage
+    public void processMessage(String message) {
+        System.out.println("Received message in client: " + message);
+    }
+
+    @OnError
+    public void processError(Throwable t) {
+        t.printStackTrace();
+    }
+    
+    public void sendMessage(String message) {
+        this.userSession.getAsyncRemote().sendText(message);
+    }
+    
+    private String getBeitragAsMapFromID(int id) throws IOException {
+    	try {
+    		FileHelper fh = new FileHelper();
+    		
+			JSONArray textArr = fh.readJsonArrayFromUrl("https://www.internate.org/wp-json/wp/v2/posts?_fields[]=content&per_page=1&include="+id);
+			
+			if(textArr != null) {
+				JSONObject text = (JSONObject) textArr.get(0);
+				
+				String blog = text.getJSONObject("content").getString("rendered");
+				
+				String[] arr = fh.replaceAllSpaces(fh.replaceAllPunctuation(fh.replaceAllNumbers(fh.replaceHTML(blog)))).split(" ");
+				
+				Map<String, Integer> map = fh.wordCountMap(arr);
+				
+				String mapJson = JSONValue.toJSONString(map);
+				
+				return mapJson;
+			}
+			
+		} catch(JSONException ex) {
+			ex.printStackTrace();
+		}
+		return null;
+    }
+    
+    private void loadIDs() throws JSONException, IOException {
+		System.out.println("loadIDs aufgerufen");
+		FileHelper fh = new FileHelper();
+		
+		JSONArray json = fh.readJsonArrayFromUrl("https://www.internate.org/wp-json/wp/v2/posts?_fields[]=id&per_page=100");
+		
+		for(Object ob : json) {			
+			if(ob instanceof JSONObject && ((int)(Math.random()*100)) % 2 == 0) { 	//Dieser Teil wurde zum testen des Nachladens hinzugefuegt um zufaellig die IDs der Liste hinzuzufuegen
+			//if(ob instanceof JSONObject) {		//Mit dieser Zeile werden alle IDs geladen
+				JSONObject jsonOb = (JSONObject) ob;
+				String id = ((Integer) jsonOb.get("id")).toString();
+
+				if(!ids.contains(Integer.parseInt(id))) {
+					ids.add(Integer.parseInt(id));
+					System.out.println("id: "+id+" added");
+					this.userSession.getAsyncRemote().sendText(getBeitragAsMapFromID(Integer.parseInt(id)) + "&" + Integer.parseInt(id));
+				}
+			}
+		}
+	}
+}

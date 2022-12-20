@@ -37,10 +37,6 @@ public class Index extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		File path = new File(getServletContext().getRealPath("/"));
 		
-		InternateAbfrage ia = new InternateAbfrage();
-		
-		ia.initRunnable();
-		
 		File index = new File(path,"html/Index.html");
 		FileHelper fh = new FileHelper();
 		response.setContentType("text/html");

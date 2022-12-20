@@ -11,12 +11,6 @@ Hierbei wurde Java in der Version 15, JavaScript in der Version 1.0 und Dynamic 
 
 
 
-Zum Testen habe ich den Abruf der IDs zufällig gestört, sodass die IDs nur zufällig der Liste hinzugefügt werden und diese dann auch ggf. nachgeladen werden konnten.
-
-Diese Testbedingung ist auch innerhalb des Servlets InternateAbfrage.java dokumentiert und lässt sich problemlos entfernen.
-
-
-
 Die unter Hausaufgabe/src/main/webapp/WEB-INF/lib abgelegten .jar-Verzeichnisse müssen eingebunden werden, damit die Servlets korrekt kompilieren können.
 
 
