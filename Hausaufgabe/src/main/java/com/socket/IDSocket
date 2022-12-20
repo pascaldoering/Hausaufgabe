@@ -77,8 +77,7 @@ public class IDSocket {
 		JSONArray json = fh.readJsonArrayFromUrl("https://www.internate.org/wp-json/wp/v2/posts?_fields[]=id&per_page=100");
 		
 		for(Object ob : json) {			
-			if(ob instanceof JSONObject && ((int)(Math.random()*100)) % 2 == 0) { 	//Dieser Teil wurde zum testen des Nachladens hinzugefuegt um zufaellig die IDs der Liste hinzuzufuegen
-			//if(ob instanceof JSONObject) {		//Mit dieser Zeile werden alle IDs geladen
+			if(ob instanceof JSONObject) {		
 				JSONObject jsonOb = (JSONObject) ob;
 				String id = ((Integer) jsonOb.get("id")).toString();
 
