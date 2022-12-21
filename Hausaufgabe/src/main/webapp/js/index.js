@@ -51,11 +51,6 @@ function openSocket() {
     };
 }
 
-function send() {
-    var text = document.getElementById("messageinput").value;
-    webSocket.send(text);
-}
-
 function closeSocket() {
     webSocket.close();
 }
