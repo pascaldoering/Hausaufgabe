@@ -3,7 +3,7 @@ Dieses Projekt wurde in Eclipse for Enterprise Java and Web Developers entwickel
 
 Backend wurde mit Java Servlets und WebSocket umgesetzt.
 
-Frontend in JavaScript.
+Frontend in JavaScript, mit Hilfe der Design Library Bootstrap.
 
 Das Projekt wurde als Dynamic Web Project angelegt.
 
