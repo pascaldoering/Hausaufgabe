@@ -1,7 +1,7 @@
 Dieses Projekt wurde in Eclipse for Enterprise Java and Web Developers entwickelt.
 
 
-Backend wurde mit Java Servlets umgesetzt.
+Backend wurde mit Java Servlets und WebSocket umgesetzt.
 
 Frontend in JavaScript.
 
